@@ -8,56 +8,120 @@ namespace AddressBooks
     public interface IContact
     {
         public  void ReadInputs();
+        public void AddContacts();
     }
 
     class AddressBook : IContact
     {
-        // Initialize all variable
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string address { get; set; }
-        public string state { get; set; }
-        public int zip { get; set; }
-        public int phnNum { get; set; }
-        public string email { get; set; }
-        
-        // Create a Empty List
-        public static List<AddressBook> list = new List<AddressBook>();
-
-        public  void ReadInputs()
+        public class Person
         {
-            // Input from the User
+            public string firstName { get; set; }
+            public string lastName { get; set; }
+            public string address { get; set; }
+            public string state { get; set; }
+            public int zip { get; set; }
+            public int phnNum { get; set; }
+            public string email { get; set; }
+        }
+        //list holds variables in a specific order
+        public static List<Person> list = new List<Person>();
+
+        //Add contacts into the list
+        public void AddContacts()
+        {
+            while (true) 
+            {
+                Console.WriteLine("\nEnter an option:");
+                Console.WriteLine("1.Add New Contact \n2.Exit");
+
+                int choice = (Convert.ToInt32(Console.ReadLine()));
+
+                AddressBook obj = new AddressBook();
+                switch (choice)
+                {
+                    case 1:
+                        obj.ReadInputs();
+                        Console.WriteLine();
+                        break;
+                    case 2:
+                        Environment.Exit(0);
+                        break;
+
+                    default:
+
+                        Console.WriteLine("\nEnter Vaild Choice\n");
+                        break;
+                }
+            }
+           
+
+        }
+
+
+        //Get input from user
+        public void ReadInputs()
+        {
+
+            Person person = new Person();
             Console.WriteLine("Enter your First Name :");
-            string firstName = Console.ReadLine();
+            person.firstName = Console.ReadLine();
 
             Console.WriteLine("Enter your Last Name :");
-            string lastName = Console.ReadLine();
+            person.lastName = Console.ReadLine();
 
             Console.WriteLine("Enter your Address :");
-            string address = Console.ReadLine();
+            person.address = Console.ReadLine();
 
             Console.WriteLine("Enter your State :");
-            string state = Console.ReadLine();
+            person.state = Console.ReadLine();
 
             Console.WriteLine("Enter your Zipcode :");
-            int zip = Convert.ToInt32(Console.ReadLine());
+            person.zip = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Enter your Phone Number :");
-            int phnNum = Convert.ToInt32(Console.ReadLine());
+            person.phnNum = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Enter your Email Address :");
-            string email = Console.ReadLine();
+            person.email = Console.ReadLine();
 
-
-            Console.WriteLine("Firstname you entered: " + firstName);
-            Console.WriteLine("Lastname you entered: " + lastName);
-            Console.WriteLine("Address you entered: " + address);
-            Console.WriteLine("State you entered: " + state);
-
-            Console.WriteLine("Zipcode you entered: " + zip);
-            Console.WriteLine("Phone NUmber you entered: " + phnNum);
-            Console.WriteLine("Email you entered: " + email);
+            list.Add(person);
+            ListPeople();
             
+        }
+
+
+        //view the contacts in a list
+        private static void ListPeople()
+        {
+            if (list.Count == 0)
+            {
+                Console.WriteLine("Your address book is empty. Press any key to continue.");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine("\nHere are the current people in your address book:\n");
+            //Access the elements in the list
+            foreach (var value in list)
+            {
+                GetInfo(value);
+            }
+
+        }
+
+        // Display the values
+
+        static void GetInfo(Person value)
+        {
+
+            Console.WriteLine("Firstname you entered: " + value.firstName);
+            Console.WriteLine("Lastname you entered: " + value.lastName);
+            Console.WriteLine("Address you entered: " + value.address);
+            Console.WriteLine("State you entered: " + value.state);
+            Console.WriteLine("Zipcode you entered: " + value.zip);
+            Console.WriteLine("Phone NUmber you entered: " + value.phnNum);
+            Console.WriteLine("Email you entered: " + value.email);
+
         }
     }
 }
