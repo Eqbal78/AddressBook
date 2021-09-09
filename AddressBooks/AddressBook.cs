@@ -32,7 +32,7 @@ namespace AddressBooks
             while (true) 
             {
                 Console.WriteLine("\nEnter an option:");
-                Console.WriteLine("1.Add New Contact \n2.List of Contact \n3.Edit Of Contact \n4. Exit ");
+                Console.WriteLine("1.Add New Contact \n2.List of Contact \n3.Edit Contact \n4.Delete Contact \n5.Exit ");
 
                 int choice = (Convert.ToInt32(Console.ReadLine()));
 
@@ -48,8 +48,11 @@ namespace AddressBooks
                         break;
                     case 3:
                         obj.EditDetails();
-                        break;    
+                        break;
                     case 4:
+                        obj.DeleteContact();
+                        break;
+                    case 5:
                         Environment.Exit(0);
                         break;
                    
@@ -99,6 +102,7 @@ namespace AddressBooks
         //view the contacts in a list
         public static void ListPeople()
         {
+            // Check list is Empty or not
             if (list.Count == 0)
             {
                 Console.WriteLine("Your address book is empty. Press any key to continue.");
@@ -110,18 +114,22 @@ namespace AddressBooks
             //Access the elements in the list
             foreach (var value in list)
             {
-                //Console.WriteLine(value);
+                
                 GetInfo(value);
             }
 
         }
-
+        // Create Method to Edit Contact Details.
         public void EditDetails()
         {
-            Console.WriteLine("Enter your Person Name to edit details:");
+            // Enter First name From the User To Edit
+            Console.WriteLine("Enter Person Name to edit details:");
             string name = Console.ReadLine();
+
+            // Check all Value in List
             foreach (var value in list)
             {
+                // Check Condition FirstName equal to Name
                 if (value.firstName.Equals(name))
                 {
                     
@@ -136,11 +144,32 @@ namespace AddressBooks
                     Console.WriteLine("Enter your new Email Id: ");
                     value.email = Console.ReadLine();
                    
+                    // Get the Value from GetInfo Method
                     GetInfo(value);
                 }
             }
 
-        }   
+        }
+
+        // Create a Method to delete Contact
+        public void DeleteContact()
+        {
+            // Enter First name From the User To Delete
+            Console.WriteLine("Enter the Name to Delete Details");
+            string name = Console.ReadLine();
+
+            int i = 0;
+            foreach (var value in list)
+            {
+                if (value.firstName.Equals(name))
+                {
+                    list.RemoveAt(i);
+                    ListPeople();
+                    break;
+                }
+                i++;
+            }
+        }
 
         // Display the values
 
