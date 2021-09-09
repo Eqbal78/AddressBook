@@ -7,15 +7,15 @@ namespace AddressBooks
     // Creating a Interface to hiding some code..
     public interface IContact
     {
-        public  void ReadInputs();
-        public void AddContacts();
+        void ReadInputs();
+        void AddContacts();
     }
 
     class AddressBook : IContact
     {
         public class Person
         {
-            public string firstName { get; set; }
+            public string firstName { get ; set; }
             public string lastName { get; set; }
             public string address { get; set; }
             public string state { get; set; }
@@ -32,7 +32,7 @@ namespace AddressBooks
             while (true) 
             {
                 Console.WriteLine("\nEnter an option:");
-                Console.WriteLine("1.Add New Contact \n2.Exit");
+                Console.WriteLine("1.Add New Contact \n2.List of Contact \n3.Edit Of Contact \n4. Exit ");
 
                 int choice = (Convert.ToInt32(Console.ReadLine()));
 
@@ -44,8 +44,15 @@ namespace AddressBooks
                         Console.WriteLine();
                         break;
                     case 2:
+                        ListPeople();
+                        break;
+                    case 3:
+                        obj.EditDetails();
+                        break;    
+                    case 4:
                         Environment.Exit(0);
                         break;
+                   
 
                     default:
 
@@ -54,7 +61,6 @@ namespace AddressBooks
                 }
             }
            
-
         }
 
 
@@ -83,15 +89,15 @@ namespace AddressBooks
 
             Console.WriteLine("Enter your Email Address :");
             person.email = Console.ReadLine();
-
+    
             list.Add(person);
-            ListPeople();
+            ListPeople();   
             
         }
 
 
         //view the contacts in a list
-        private static void ListPeople()
+        public static void ListPeople()
         {
             if (list.Count == 0)
             {
@@ -104,16 +110,43 @@ namespace AddressBooks
             //Access the elements in the list
             foreach (var value in list)
             {
+                //Console.WriteLine(value);
                 GetInfo(value);
             }
 
         }
 
+        public void EditDetails()
+        {
+            Console.WriteLine("Enter your Person Name to edit details:");
+            string name = Console.ReadLine();
+            foreach (var value in list)
+            {
+                if (value.firstName.Equals(name))
+                {
+                    
+                    Console.WriteLine("Enter your new Address: ");
+                    value.address = Console.ReadLine();
+                    Console.WriteLine("Enter your new State: ");
+                    value.state = Console.ReadLine();
+                    Console.WriteLine("Enter your new ZipCode: ");
+                    value.zip = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Enter your new Phone Number: ");
+                    value.phnNum = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Enter your new Email Id: ");
+                    value.email = Console.ReadLine();
+                   
+                    GetInfo(value);
+                }
+            }
+
+        }   
+
         // Display the values
 
         static void GetInfo(Person value)
         {
-
+            Console.WriteLine("*******************************");
             Console.WriteLine("Firstname you entered: " + value.firstName);
             Console.WriteLine("Lastname you entered: " + value.lastName);
             Console.WriteLine("Address you entered: " + value.address);

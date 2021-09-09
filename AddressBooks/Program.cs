@@ -10,8 +10,8 @@ namespace AddressBooks
             AddressBook obj = new AddressBook();
             obj.ReadInputs();
             obj.AddContacts();
-           
-            //obj.ListPeople();
+            obj.EditDetails();
         }
+            
     }
 }
