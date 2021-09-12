@@ -27,6 +27,8 @@ namespace AddressBooks
         }
         //list holds variables in a specific order
         public static List<Person> list = new List<Person>();
+        // Create a Dictionary to hold list value
+        public static Dictionary<string, List<Person>> dictionary = new Dictionary<string, List<Person>>();
 
 
         //Add contacts into the list
@@ -73,40 +75,54 @@ namespace AddressBooks
         //Get input from user
         public void ReadInputs()
         {
-            Console.WriteLine("Enter number of contacts you want to add :");
-            int num = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter your Address Book Name: ");
+            string bookName = Console.ReadLine();
             
-            // Multiple data enter at a time
-            for (int i = 1; i <= num; i++)
+            //Check unique Dictionary
+            if (!dictionary.ContainsKey(bookName))
             {
-                Person person = new Person();
-                Console.WriteLine("Enter your First Name :");
-                person.firstName = Console.ReadLine();
+                //Add contact in the Dictionary
+                dictionary.Add(bookName, list);
 
-                Console.WriteLine("Enter your Last Name :");
-                person.lastName = Console.ReadLine();
+                Console.WriteLine("Enter number of contacts you want to add :");
+                int num = Convert.ToInt32(Console.ReadLine());
 
-                Console.WriteLine("Enter your Address :");
-                person.address = Console.ReadLine();
+                // Multiple data enter at a time
+                for (int i = 1; i <= num; i++)
+                {
+                    Person person = new Person();
+                    Console.WriteLine("Enter your First Name :");
+                    person.firstName = Console.ReadLine();
 
-                Console.WriteLine("Enter your State :");
-                person.state = Console.ReadLine();
+                    Console.WriteLine("Enter your Last Name :");
+                    person.lastName = Console.ReadLine();
 
-                Console.WriteLine("Enter your Zipcode :");
-                person.zip = Console.ReadLine();
-                
+                    Console.WriteLine("Enter your Address :");
+                    person.address = Console.ReadLine();
 
-                Console.WriteLine("Enter your Phone Number :");
-                person.phnNum = Console.ReadLine();
+                    Console.WriteLine("Enter your State :");
+                    person.state = Console.ReadLine();
 
-                Console.WriteLine("Enter your Email Address :");
-                person.email = Console.ReadLine();
+                    Console.WriteLine("Enter your Zipcode :");
+                    person.zip = Console.ReadLine();
 
-                list.Add(person);
+
+                    Console.WriteLine("Enter your Phone Number :");
+                    person.phnNum = Console.ReadLine();
+
+                    Console.WriteLine("Enter your Email Address :");
+                    person.email = Console.ReadLine();
+
+                    list.Add(person);
+                }
+
             }
-            
-            ListPeople();
+            else
+            {
+                Console.WriteLine("Address Book is already exists!");
 
+            }
+            ListPeople();
 
         }
 
@@ -115,7 +131,7 @@ namespace AddressBooks
          public void ListPeople()
         {
             // Check list is Empty or not
-            if (list.Count == 0)
+            if (dictionary.Count == 0)
             {
                 Console.WriteLine("Your address book is empty. Press any key to continue.");
                 Console.ReadKey();
@@ -123,11 +139,15 @@ namespace AddressBooks
             }
 
             Console.WriteLine("\nHere are the current people in your address book:\n");
-            //Access the elements in the list
-            foreach (var value in list)
+            //Access the elements in the Dictionary
+            foreach (KeyValuePair<string, List<Person>> Details in dictionary)
             {
-                
-                GetInfo(value);
+                foreach (var value in Details.Value)
+                {
+                   
+                    GetInfo(value);
+                }
+                break;
             }
 
         }
