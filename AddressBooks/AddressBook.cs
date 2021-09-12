@@ -7,24 +7,27 @@ namespace AddressBooks
     // Creating a Interface to hiding some code..
     public interface IContact
     {
-        void ReadInputs();
-        void AddContacts();
+         void ReadInputs();
+        
+         void AddContacts();
+        
     }
 
     class AddressBook : IContact
     {
         public class Person
         {
-            public string firstName { get ; set; }
+            public string firstName { get; set; }
             public string lastName { get; set; }
             public string address { get; set; }
             public string state { get; set; }
-            public int zip { get; set; }
-            public int phnNum { get; set; }
+            public string zip { get; set; }
+            public string phnNum { get; set; }
             public string email { get; set; }
         }
         //list holds variables in a specific order
         public static List<Person> list = new List<Person>();
+
 
         //Add contacts into the list
         public void AddContacts()
@@ -34,23 +37,22 @@ namespace AddressBooks
                 Console.WriteLine("\nEnter an option:");
                 Console.WriteLine("1.Add New Contact \n2.List of Contact \n3.Edit Contact \n4.Delete Contact \n5.Exit ");
 
-                int choice = (Convert.ToInt32(Console.ReadLine()));
-
-                AddressBook obj = new AddressBook();
+                int choice = Convert.ToInt32(Console.ReadLine());
+                // choose the options from user
                 switch (choice)
                 {
                     case 1:
-                        obj.ReadInputs();
+                        ReadInputs();
                         Console.WriteLine();
                         break;
                     case 2:
                         ListPeople();
                         break;
                     case 3:
-                        obj.EditDetails();
+                        EditDetails();
                         break;
                     case 4:
-                        obj.DeleteContact();
+                        DeleteContact();
                         break;
                     case 5:
                         Environment.Exit(0);
@@ -67,40 +69,50 @@ namespace AddressBooks
         }
 
 
+
         //Get input from user
         public void ReadInputs()
         {
-
-            Person person = new Person();
-            Console.WriteLine("Enter your First Name :");
-            person.firstName = Console.ReadLine();
-
-            Console.WriteLine("Enter your Last Name :");
-            person.lastName = Console.ReadLine();
-
-            Console.WriteLine("Enter your Address :");
-            person.address = Console.ReadLine();
-
-            Console.WriteLine("Enter your State :");
-            person.state = Console.ReadLine();
-
-            Console.WriteLine("Enter your Zipcode :");
-            person.zip = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Enter your Phone Number :");
-            person.phnNum = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Enter your Email Address :");
-            person.email = Console.ReadLine();
-    
-            list.Add(person);
-            ListPeople();   
+            Console.WriteLine("Enter number of contacts you want to add :");
+            int num = Convert.ToInt32(Console.ReadLine());
             
+            // Multiple data enter at a time
+            for (int i = 1; i <= num; i++)
+            {
+                Person person = new Person();
+                Console.WriteLine("Enter your First Name :");
+                person.firstName = Console.ReadLine();
+
+                Console.WriteLine("Enter your Last Name :");
+                person.lastName = Console.ReadLine();
+
+                Console.WriteLine("Enter your Address :");
+                person.address = Console.ReadLine();
+
+                Console.WriteLine("Enter your State :");
+                person.state = Console.ReadLine();
+
+                Console.WriteLine("Enter your Zipcode :");
+                person.zip = Console.ReadLine();
+                
+
+                Console.WriteLine("Enter your Phone Number :");
+                person.phnNum = Console.ReadLine();
+
+                Console.WriteLine("Enter your Email Address :");
+                person.email = Console.ReadLine();
+
+                list.Add(person);
+            }
+            
+            ListPeople();
+
+
         }
 
 
         //view the contacts in a list
-        public static void ListPeople()
+         public void ListPeople()
         {
             // Check list is Empty or not
             if (list.Count == 0)
@@ -135,17 +147,22 @@ namespace AddressBooks
                     
                     Console.WriteLine("Enter your new Address: ");
                     value.address = Console.ReadLine();
+
                     Console.WriteLine("Enter your new State: ");
                     value.state = Console.ReadLine();
+
                     Console.WriteLine("Enter your new ZipCode: ");
-                    value.zip = Convert.ToInt32(Console.ReadLine());
+                    value.zip = Console.ReadLine();
+
                     Console.WriteLine("Enter your new Phone Number: ");
-                    value.phnNum = Convert.ToInt32(Console.ReadLine());
+                    value.phnNum = Console.ReadLine();
+
                     Console.WriteLine("Enter your new Email Id: ");
                     value.email = Console.ReadLine();
                    
                     // Get the Value from GetInfo Method
                     GetInfo(value);
+                    
                 }
             }
 
@@ -158,23 +175,24 @@ namespace AddressBooks
             Console.WriteLine("Enter the Name to Delete Details");
             string name = Console.ReadLine();
 
-            int i = 0;
+            
             foreach (var value in list)
             {
                 if (value.firstName.Equals(name))
                 {
-                    list.RemoveAt(i);
+                    list.Remove(value);
                     ListPeople();
                     break;
                 }
-                i++;
+                
             }
         }
 
         // Display the values
 
-        static void GetInfo(Person value)
+        public void GetInfo(Person value)
         {
+           
             Console.WriteLine("*******************************");
             Console.WriteLine("Firstname you entered: " + value.firstName);
             Console.WriteLine("Lastname you entered: " + value.lastName);
@@ -182,8 +200,10 @@ namespace AddressBooks
             Console.WriteLine("State you entered: " + value.state);
             Console.WriteLine("Zipcode you entered: " + value.zip);
             Console.WriteLine("Phone NUmber you entered: " + value.phnNum);
-            Console.WriteLine("Email you entered: " + value.email);
+            Console.WriteLine("Email you entered: " + value.email);            
 
         }
+
+        
     }
 }
