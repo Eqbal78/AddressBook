@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AddressBooks
 {
-    // Creating a Interface to hiding some code..
+    // Creating a Interface to hiding some code.. 
     public interface IContact
     {
          void ReadInputs();
@@ -15,23 +15,21 @@ namespace AddressBooks
 
     class AddressBook : IContact
     {
-        public class Person
-        {
-            public string firstName { get; set; }
-            public string lastName { get; set; }
-            public string address { get; set; }
-            public string state { get; set; }
-            public string zip { get; set; }
-            public string phnNum { get; set; }
-            public string email { get; set; }
-        }
-        //list holds variables in a specific order
+       
+        /// <summary>
+        /// list holds variables in a specific order
+        /// </summary>
         public static List<Person> list = new List<Person>();
-        // Create a Dictionary to hold list value
+
+        /// <summary>
+        /// Create a Dictionary to hold list value
+        /// </summary>
         public static Dictionary<string, List<Person>> dictionary = new Dictionary<string, List<Person>>();
 
 
-        //Add contacts into the list
+        /// <summary>
+        /// Add contacts into the list
+        /// </summary>
         public void AddContacts()
         {
             while (true) 
@@ -72,11 +70,14 @@ namespace AddressBooks
 
 
 
-        //Get input from user
+        /// <summary>
+        /// Get input from user
+        /// </summary>
         public void ReadInputs()
         {
-            Console.WriteLine("Enter your Address Book Name: ");
+            Console.WriteLine("\nEnter your Address Book Name: ");
             string bookName = Console.ReadLine();
+            Console.WriteLine("\n-----------------------------------\n");
             
             //Check unique Dictionary
             if (!dictionary.ContainsKey(bookName))
@@ -86,32 +87,67 @@ namespace AddressBooks
 
                 Console.WriteLine("Enter number of contacts you want to add :");
                 int num = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("\n----------------------------------\n");
 
                 // Multiple data enter at a time
                 for (int i = 1; i <= num; i++)
                 {
                     Person person = new Person();
-                    Console.WriteLine("Enter your First Name :");
+
+                    while (true)
+                    {
+                        //Check Duplicate Entry
+                        Console.WriteLine("Check Duplicate Entry");
+                        Console.Write("\nEnter First Name: ");
+                        string firstName = Console.ReadLine();
+                        if (list.Count > 0)
+                        {
+                            //Using lambda expression
+                            var x = list.Find(x => x.firstName.Equals(firstName));
+                            if (x != null)
+                            {
+                                Console.WriteLine("Your name  already exists\n");
+                                Console.WriteLine("**************************");
+                            }
+                            else
+                            {
+                                person.firstName = firstName;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            person.firstName = firstName;
+                            Console.WriteLine("There is no such name. You can add this name!!");
+                            Console.WriteLine("\n-------------------------");
+                            break;
+                        }
+
+                    }
+
+                    //Add Contacts
+                    Console.WriteLine("\nEnter your First Name :");
                     person.firstName = Console.ReadLine();
 
-                    Console.WriteLine("Enter your Last Name :");
+                    Console.WriteLine("\nEnter your Last Name :");
                     person.lastName = Console.ReadLine();
 
-                    Console.WriteLine("Enter your Address :");
+                    Console.WriteLine("\nEnter your Address :");
                     person.address = Console.ReadLine();
 
-                    Console.WriteLine("Enter your State :");
+                    Console.WriteLine("\nEnter your State :");
                     person.state = Console.ReadLine();
 
-                    Console.WriteLine("Enter your Zipcode :");
+                    Console.WriteLine("\nEnter your Zipcode :");
                     person.zip = Console.ReadLine();
 
 
-                    Console.WriteLine("Enter your Phone Number :");
+                    Console.WriteLine("\nEnter your Phone Number :");
                     person.phnNum = Console.ReadLine();
 
-                    Console.WriteLine("Enter your Email Address :");
+                    Console.WriteLine("\nEnter your Email Address :");
                     person.email = Console.ReadLine();
+                    Console.WriteLine("***********************************\n");
 
                     list.Add(person);
                 }
@@ -119,7 +155,7 @@ namespace AddressBooks
             }
             else
             {
-                Console.WriteLine("Address Book is already exists!");
+                Console.WriteLine("\nAddress Book is already exists!");
 
             }
             ListPeople();
@@ -127,8 +163,10 @@ namespace AddressBooks
         }
 
 
-        //view the contacts in a list
-         public void ListPeople()
+        /// <summary>
+        /// view the contacts in a list
+        /// </summary>
+        public void ListPeople()
         {
             // Check list is Empty or not
             if (dictionary.Count == 0)
@@ -151,7 +189,10 @@ namespace AddressBooks
             }
 
         }
-        // Create Method to Edit Contact Details.
+
+        /// <summary>
+        /// Create Method to Edit Contact Details.
+        /// </summary>
         public void EditDetails()
         {
             // Enter First name From the User To Edit
@@ -168,17 +209,18 @@ namespace AddressBooks
                     Console.WriteLine("Enter your new Address: ");
                     value.address = Console.ReadLine();
 
-                    Console.WriteLine("Enter your new State: ");
+                    Console.WriteLine("\nEnter your new State: ");
                     value.state = Console.ReadLine();
 
-                    Console.WriteLine("Enter your new ZipCode: ");
+                    Console.WriteLine("\nEnter your new ZipCode: ");
                     value.zip = Console.ReadLine();
 
-                    Console.WriteLine("Enter your new Phone Number: ");
+                    Console.WriteLine("\nEnter your new Phone Number: ");
                     value.phnNum = Console.ReadLine();
 
-                    Console.WriteLine("Enter your new Email Id: ");
+                    Console.WriteLine("\nEnter your new Email Id: ");
                     value.email = Console.ReadLine();
+                    Console.WriteLine("\n***************************************\n");
                    
                     // Get the Value from GetInfo Method
                     GetInfo(value);
@@ -188,7 +230,7 @@ namespace AddressBooks
 
         }
 
-        // Create a Method to delete Contact
+        //Create a Method to delete Contact 
         public void DeleteContact()
         {
             // Enter First name From the User To Delete
@@ -208,12 +250,15 @@ namespace AddressBooks
             }
         }
 
-        // Display the values
+        /// <summary>
+        ///  Display the values
+        /// </summary>
+        /// <param name="value"></param>
 
         public void GetInfo(Person value)
         {
            
-            Console.WriteLine("*******************************");
+            Console.WriteLine("\n*******************************\n");
             Console.WriteLine("Firstname you entered: " + value.firstName);
             Console.WriteLine("Lastname you entered: " + value.lastName);
             Console.WriteLine("Address you entered: " + value.address);
