@@ -35,7 +35,7 @@ namespace AddressBooks
             while (true) 
             {
                 Console.WriteLine("\nEnter an option:");
-                Console.WriteLine("1.Add New Contact \n2.List of Contact \n3.Edit Contact \n4.Delete Contact \n5.Search Contact \n6.View Contact by City or State \n7.Exit ");
+                Console.WriteLine("1.Add New Contact \n2.List of Contact \n3.Edit Contact \n4.Delete Contact \n5.Search Contact by City or State \n6.View Contact by City or State \n7.Number of Contacts Count by City or State \n8.Exit ");
 
                 int choice = Convert.ToInt32(Console.ReadLine());
                 // choose the options from user
@@ -61,6 +61,9 @@ namespace AddressBooks
                         ViewDetailsByStateOrCity();
                         break;
                     case 7:
+                        CountByStateOrCity();
+                        break;
+                    case 8:
                         Environment.Exit(0);
                         break;
                    
@@ -402,13 +405,38 @@ namespace AddressBooks
                     Console.WriteLine("\nEnter the name of city in which you want to view:");
                     string cityName = Console.ReadLine();
                     Console.WriteLine("\n-----------------------------------------");
-                    ViewByCityName(cityName);
+                    ViewByCityName(cityName, "view");
                     break;
                 case 2:
                     Console.WriteLine("\nEnter the name of state in which you want to view:");
                     string stateName = Console.ReadLine();
                     Console.WriteLine("\n---------------------------------------------");
-                    ViewByStateName(stateName);
+                    ViewByStateName(stateName, "view");
+                    break;
+                default:
+                    return;
+
+            }
+
+        }
+
+        public void CountByStateOrCity()
+        {
+
+            Console.WriteLine("\n1.Number of contacts by city name \n2.Number of contacts by state name \nEnter your option:");
+            switch (Convert.ToInt32(Console.ReadLine()))
+            {
+                case 1:
+                    Console.WriteLine("\nEnter the name of city in which you want to count persons:");
+                    string cityName = Console.ReadLine();
+                    Console.WriteLine("\n-----------------------------------------");
+                    ViewByCityName(cityName, "count");
+                    break;
+                case 2:
+                    Console.WriteLine("\nEnter the name of state in which you want to count persons:");
+                    string stateName = Console.ReadLine();
+                    Console.WriteLine("\n-----------------------------------------");
+                    ViewByStateName(stateName, "count");
                     break;
                 default:
                     return;
@@ -421,7 +449,7 @@ namespace AddressBooks
         /// View Detail by City name
         /// </summary>
         /// <param name="cityName"></param>
-        public void ViewByCityName(string cityName)
+        public void ViewByCityName(string cityName, string check)
         {
             if (dictionary.Count > 0)
             {
@@ -430,21 +458,30 @@ namespace AddressBooks
                 {
                     list = dict.Value.FindAll(x => x.city.Equals(cityName));
                 }
-                if (list.Count > 0)
+                if (check.Equals("view"))
                 {
-                    foreach (var x in list)
+                    if (list.Count > 0)
                     {
-                        GetInfo(x);
+                        foreach (var x in list)
+                        {
+                            GetInfo(x);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nNo Persons found");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("No Persons found");
+                    int countCity = list.Count;
+                    Console.WriteLine($"\nThe total persons in {cityName} are : {countCity}");
                 }
+
             }
             else
             {
-                Console.WriteLine("Adress book is empty");
+                Console.WriteLine("\nAdress book is empty");
             }
         }
 
@@ -452,7 +489,7 @@ namespace AddressBooks
         /// View Datail By state name
         /// </summary>
         /// <param name="stateName"></param>
-        public void ViewByStateName(string stateName)
+        public void ViewByStateName(string stateName, string check)
         {
             if (dictionary.Count > 0)
             {
@@ -461,21 +498,31 @@ namespace AddressBooks
                 {
                     list = dict.Value.FindAll(x => x.state.Equals(stateName));
                 }
-                if (list.Count > 0)
+
+                if (check.Equals("view"))
                 {
-                    foreach (var x in list)
+                    if (list.Count > 0)
                     {
-                        GetInfo(x);
+                        foreach (var x in list)
+                        {
+                            GetInfo(x);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nNo Persons found");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("No Persons found");
+                    int countState = list.Count;
+                    Console.WriteLine($"\nThe total persons in {stateName} are : {countState}");
                 }
             }
+
             else
             {
-                Console.WriteLine("Adress book is empty");
+                Console.WriteLine("\nAdress book is empty");
             }
         }
     }
