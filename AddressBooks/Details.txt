@@ -1,0 +1,17 @@
+﻿FirstName: Ram
+LastName: Kumar
+Address: Dader
+City    : Mumbai
+State   : Maharastra
+ZipCode: 445445
+PhoneNum: 986541237
+Email   : abc@gmail.com
+
+FirstName: Sonu
+LastName: Kumer
+Address: Hingna
+City    : Nagpur
+State   : Maharastra
+ZipCode: 440016
+PhoneNum: 879654231
+Email   : xyz@gmail.com

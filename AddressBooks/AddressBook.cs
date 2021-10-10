@@ -35,7 +35,7 @@ namespace AddressBooks
             while (true) 
             {
                 Console.WriteLine("\nEnter an option:");
-                Console.WriteLine("1.Add New Contact \n2.List of Contact \n3.Edit Contact \n4.Delete Contact \n5.Search Contact by City or State \n6.View Contact by City or State \n7.Number of Contacts Count by City or State \n8.Exit ");
+                Console.WriteLine("1.Add New Contact \n2.List of Contact \n3.Edit Contact \n4.Delete Contact \n5.Search Contact by City or State \n6.View Contact by City or State \n7.Number of Contacts Count by City or State \n8.Write the Contact into File \n9.Read the Contact into File \n10.Exit ");
 
                 int choice = Convert.ToInt32(Console.ReadLine());
                 // choose the options from user
@@ -63,7 +63,15 @@ namespace AddressBooks
                     case 7:
                         CountByStateOrCity();
                         break;
+
                     case 8:
+                        //WritePersonDetailTextFile();
+                        File_IO.WriteTxtFile(list);
+                        break;
+                    case 9:
+                        File_IO.ReadTxtFile();
+                        break;
+                    case 10:
                         Environment.Exit(0);
                         break;
                    
