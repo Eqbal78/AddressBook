@@ -5,6 +5,7 @@ using System.IO;
 using CsvHelper;
 using System.Globalization;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace AddressBooks
 {
@@ -12,6 +13,7 @@ namespace AddressBooks
     {
         static String FilePath = @"C:\Users\HP\Desktop\practice_dotnet\AddressBooks\AddressBook\AddressBooks\Details.txt";
         static String CsvPath = @"C:\Users\HP\Desktop\practice_dotnet\AddressBooks\AddressBook\AddressBooks\ContactData.csv";
+        static String JsonPath = @"C:\Users\HP\Desktop\practice_dotnet\AddressBooks\AddressBook\AddressBooks\JsonData.json";
 
         /// <summary>
         /// Write the Text from File
@@ -33,9 +35,7 @@ namespace AddressBooks
                         streamWriter.WriteLine("State   : " + person.state);
                         streamWriter.WriteLine("ZipCode: " + person.zip);
                         streamWriter.WriteLine("PhoneNum: " + person.phnNum);
-                        streamWriter.WriteLine("Email   : " + person.email);
-                        
-                        
+                        streamWriter.WriteLine("Email   : " + person.email);  
 
                     }
                     streamWriter.Close();
@@ -104,6 +104,49 @@ namespace AddressBooks
                 }
             }
 
+        }
+
+        /// <summary>
+        /// Write the data in Json file
+        /// </summary>
+        /// <param name="contacts"></param>
+        public static void WriteContactsInJSONFile(List<Person> contacts)
+        {
+            if (File.Exists(JsonPath))
+            {
+                JsonSerializer jsonSerializer = new JsonSerializer();
+                using (StreamWriter streamWriter = new StreamWriter(JsonPath))
+                using (JsonWriter writer = new JsonTextWriter(streamWriter))
+                {
+                    jsonSerializer.Serialize(writer, contacts);
+                }
+                Console.WriteLine("\nWritting Contacts to the JSON file");
+            }
+            else
+            {
+                Console.WriteLine("\nNo such file exists");
+            }
+            ReadContactsFromJSONFile();
+        }
+
+        /// <summary>
+        /// read data in json file
+        /// </summary>
+        public static void ReadContactsFromJSONFile()
+        {
+            if (File.Exists(JsonPath))
+            {
+                IList<Person> contactsRead = JsonConvert.DeserializeObject<IList<Person>>(File.ReadAllText(JsonPath));
+                foreach (Person contact in contactsRead)
+                {
+                   
+                    Console.WriteLine("FirstName : "+ contact.firstName + "\nLastName : " + contact.lastName + "\nAddress : " + contact.address + "\nCity : " + contact.city + "\nState : " + contact.state + "\nZipCode : " + contact.zip + "\nPhoneNumber : " + contact.phnNum + "\nEmail : " + contact.email);
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nNo such file exists");
+            }
         }
     }
 }

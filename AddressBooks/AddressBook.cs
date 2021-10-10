@@ -35,7 +35,7 @@ namespace AddressBooks
             while (true) 
             {
                 Console.WriteLine("\nEnter an option:");
-                Console.WriteLine("1.Add New Contact \n2.List of Contact \n3.Edit Contact \n4.Delete Contact \n5.Search Contact by City or State \n6.View Contact by City or State \n7.Number of Contacts Count by City or State \n8.Write the Contact into File \n9.Read the Contact into File \n10.Write the Contact into CSV File \n11.Read the Contact into CSV File \n12.Exit ");
+                Console.WriteLine("1.Add New Contact \n2.List of Contact \n3.Edit Contact \n4.Delete Contact \n5.Search Contact by City or State \n6.View Contact by City or State \n7.Number of Contacts Count by City or State \n8.Write the Contact into File \n9.Read the Contact into File \n10.Write the Contact into CSV File \n11.Read the Contact into CSV File \n12.Write the Contact into Json File \n13.Read the Contact into Json File \n14.Exit ");
 
                 int choice = Convert.ToInt32(Console.ReadLine());
                 // choose the options from user
@@ -77,7 +77,14 @@ namespace AddressBooks
                     case 11:
                         File_IO.ReadContactsFromCSV();
                         break;
+
                     case 12:
+                        File_IO.WriteContactsInJSONFile(list);
+                        break;
+                    case 13:
+                        File_IO.ReadContactsFromJSONFile();
+                        break;
+                    case 14:
                         Environment.Exit(0);
                         break;
                    
